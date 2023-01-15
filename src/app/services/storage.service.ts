@@ -6,13 +6,17 @@ import { eager } from '@utils/eager.util';
 
 import { map, Observable, take } from 'rxjs';
 
+import { AuthService } from '../auth';
 import { NewTask, Task, TaskId } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
   public readonly taskList$: Observable<Task[]>;
 
-  constructor(private readonly _store: Firestore) {
+  constructor(
+    private readonly _store: Firestore,
+    private readonly _auth: AuthService,
+  ) {
     this.taskList$ = this._getAll();
   }
 
@@ -39,7 +43,9 @@ export class StorageService {
   private _getAll(): Observable<Task[]> {
     const col = collection(this._store, 'task') as CollectionReference<Task>;
 
-    const taskList$ = collectionData(col, { idField: 'id' });
+    const taskList$ = collectionData(col, { idField: 'id' }).pipe(
+      map(list => list.filter(task => task.executorId === this._auth.user?.id)),
+    );
 
     return eager(taskList$);
   }

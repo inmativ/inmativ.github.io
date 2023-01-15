@@ -29,6 +29,6 @@ export class AuthComponent {
 
   public select(user: User): void {
     LocalStorage.set('userId', user.id);
-    this._router.navigate(['/'], { replaceUrl: true });
+    this._router.navigate(['../'], { replaceUrl: true });
   }
 }
