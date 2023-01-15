@@ -1,0 +1,2 @@
+Выберите пользователя:
+<button class="button" *ngFor="let user of users$ | async" (click)="select(user)">{{ user.name }}</button>

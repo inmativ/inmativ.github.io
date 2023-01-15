@@ -1,0 +1,6 @@
+<p>Все задачи</p>
+
+Добавить задачу
+<app-add-task (newTask)="addTask($event)"></app-add-task>
+
+<app-task-list [list]="(list$ | async) || []"></app-task-list>

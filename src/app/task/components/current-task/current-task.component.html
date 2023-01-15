@@ -1,0 +1,5 @@
+<p>{{ name$ | async}}</p>
+
+Добавить подзадачу
+<app-add-task (newTask)="addSubTask($event)"></app-add-task>
+<app-task-list [list]="(subTaskList$ | async) || []"></app-task-list>
